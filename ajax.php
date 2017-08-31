@@ -73,9 +73,9 @@ case 'save':
 	    $data = json_decode($data, true);
 	    foreach ($data as $row) {
             //Предположим что у нас  есть ORM какой-то абстрактный
-            $menuItem = MenuItem::where('owner_id', $owner_id)
-                            ->where('id', (int)$row['id'])
+            $menuItem = MenuItem::where('id', (int)$row['id'])
                                 ->firstOrCreate();
+            $menuItem->owner_id = $owner_id;
             $menuItem->fill($row);
             if (!$menuItem->save()) {
                 //Если вдруг не прошла валидация, добавим к списку ошибок, но откатывать другие н ебудем ибо глупо
